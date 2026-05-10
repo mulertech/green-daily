@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard — Green Daily{% endblock %}
+
+{% block body %}
+    <main class="mx-auto max-w-md px-4 pb-28 pt-6">
+        <header class="mb-6 flex items-start justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-emerald-700">Aujourd'hui</h1>
+                <p class="text-sm text-slate-500">{{ today|format_date('full', locale='fr') }}</p>
+            </div>
+            <a href="{{ path('app_profile') }}" class="text-sm text-slate-500 hover:text-slate-700">⚙️</a>
+        </header>
+
+        {% for message in app.flashes('success') %}
+            <div class="mb-4 rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{{ message }}</div>
+        {% endfor %}
+
+        <section class="mb-6 space-y-2">
+            {% for stat in intake.ordered %}
+                {% set pct = stat.percent %}
+                {% set bar_class = pct is null ? 'bg-slate-300'
+                    : pct < 50 ? 'bg-red-500'
+                    : pct < 80 ? 'bg-amber-500'
+                    : pct <= 120 ? 'bg-emerald-500'
+                    : 'bg-sky-500' %}
+                <div class="rounded-lg bg-white px-4 py-3 shadow-sm">
+                    <div class="flex items-baseline justify-between">
+                        <span class="text-sm font-medium text-slate-800">{{ stat.code.label }}</span>
+                        <span class="text-xs text-slate-500">
+                            {{ stat.consumed|number_format(1, ',', ' ') }}
+                            {% if stat.target %}/ {{ stat.target|number_format(0, ',', ' ') }}{% endif %}
+                            {{ stat.code.unit }}
+                            {% if pct is not null %} · <strong class="text-slate-700">{{ pct }}%</strong>{% endif %}
+                        </span>
+                    </div>
+                    <div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+                        <div class="h-full {{ bar_class }} transition-all"
+                             style="width: {{ pct is null ? 0 : (pct > 100 ? 100 : pct) }}%"></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+
+        <section>
+            <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Aliments du jour</h2>
+            {% if entries is empty %}
+                <p class="rounded-lg bg-white px-4 py-6 text-center text-sm text-slate-500 shadow-sm">
+                    Aucun aliment ajouté aujourd'hui.
+                </p>
+            {% else %}
+                <ul class="space-y-2">
+                    {% for entry in entries %}
+                        <li class="flex items-center justify-between rounded-lg bg-white px-4 py-3 shadow-sm">
+                            <div>
+                                <div class="text-sm font-medium text-slate-800">{{ entry.food.nameFr }}</div>
+                                <div class="text-xs text-slate-500">{{ entry.quantityGrams|number_format(0, ',', ' ') }} g</div>
+                            </div>
+                            <form method="post" action="{{ path('app_entries_delete', { id: entry.id }) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-' ~ entry.id) }}">
+                                <button type="submit" class="text-slate-400 hover:text-red-600" aria-label="Supprimer">✕</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </section>
+
+        <section class="mt-6">
+            <form method="post" action="{{ path('app_recipe_suggest') }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('recipe-suggest') }}">
+                <button type="submit"
+                        class="w-full rounded-lg border border-emerald-200 bg-white px-4 py-3 text-sm font-medium text-emerald-700 shadow-sm transition hover:bg-emerald-50">
+                    🍲 Suggérer une recette pour combler la journée
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <a href="{{ path('app_entries_new') }}"
+       class="fixed bottom-6 right-1/2 z-10 flex h-14 w-14 translate-x-1/2 items-center justify-center rounded-full bg-emerald-600 text-3xl font-light text-white shadow-lg transition hover:bg-emerald-700"
+       aria-label="Ajouter un aliment">+</a>
+{% endblock %}

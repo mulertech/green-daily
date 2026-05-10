@@ -1,0 +1,9 @@
+framework:
+    mailer:
+        # Modified by mulertech/docker-dev package for Docker environment
+            dsn: '%env(trim:file:MAILER_DSN_FILE)%'
+
+when@test:
+    framework:
+        mailer:
+            dsn: '%env(MAILER_DSN)%'

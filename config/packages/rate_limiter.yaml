@@ -1,0 +1,6 @@
+framework:
+    rate_limiter:
+        recipe_suggest:
+            policy: 'token_bucket'
+            limit: 10
+            rate: { interval: '1 hour', amount: 10 }

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil — Green Daily{% endblock %}
+
+{% block body %}
+    <main class="mx-auto max-w-md px-6 py-8">
+        <header class="mb-6 flex items-center justify-between">
+            <h1 class="text-2xl font-bold text-emerald-700">Profil</h1>
+            <a href="{{ path('app_logout') }}" class="text-sm text-slate-500 hover:text-slate-700">Se déconnecter</a>
+        </header>
+
+        {% for message in app.flashes('success') %}
+            <div class="mb-4 rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{{ message }}</div>
+        {% endfor %}
+
+        <div class="mb-4 rounded-lg bg-white px-4 py-3 shadow-sm">
+            <div class="text-xs uppercase tracking-wide text-slate-500">Email</div>
+            <div class="text-base text-slate-900">{{ user.email }}</div>
+        </div>
+
+        {{ form_start(form, { attr: { class: 'space-y-4' } }) }}
+            <div>
+                {{ form_label(form.sex, null, { label_attr: { class: 'mb-1 block text-sm font-medium text-slate-700' } }) }}
+                {{ form_widget(form.sex, { attr: { class: 'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none' } }) }}
+                {{ form_errors(form.sex) }}
+            </div>
+
+            <div>
+                {{ form_label(form.birthDate, null, { label_attr: { class: 'mb-1 block text-sm font-medium text-slate-700' } }) }}
+                {{ form_widget(form.birthDate, { attr: { class: 'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none' } }) }}
+                {{ form_errors(form.birthDate) }}
+            </div>
+
+            <button type="submit"
+                    class="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-base font-medium text-white shadow-sm transition hover:bg-emerald-700">
+                Enregistrer
+            </button>
+        {{ form_end(form) }}
+
+        <p class="mt-6 text-center text-sm">
+            <a href="{{ path('app_home') }}" class="text-emerald-700 hover:underline">← Accueil</a>
+        </p>
+    </main>
+{% endblock %}

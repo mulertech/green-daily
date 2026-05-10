@@ -1,0 +1,40 @@
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfonycasts/tailwind-bundle ###
+/var/tailwind/
+/public/assets/styles/
+###< symfonycasts/tailwind-bundle ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+# IDE
+/.idea/
+/.vscode/
+
+# Node (Tailwind binary cache only — no node_modules expected)
+/node_modules/
+
+# Docker development environment
+.mtdocker/
+
