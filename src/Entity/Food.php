@@ -7,11 +7,13 @@ namespace App\Entity;
 use App\Repository\FoodRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FoodRepository::class)]
 #[ORM\Table(name: 'food')]
 #[ORM\UniqueConstraint(name: 'uniq_food_alim_code', columns: ['alim_code'])]
+#[ORM\Index(name: 'idx_food_search_vector', columns: ['search_vector'], flags: ['gin'])]
 class Food
 {
     #[ORM\Id]
@@ -30,6 +32,16 @@ class Food
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $subGroupName = null;
+
+    #[ORM\Column(
+        name: 'search_vector',
+        type: Types::TEXT,
+        nullable: true,
+        insertable: false,
+        updatable: false,
+        columnDefinition: "TSVECTOR GENERATED ALWAYS AS (to_tsvector('french_unaccent', name_fr)) STORED",
+    )]
+    private ?string $searchVector = null;
 
     /** @var Collection<int, FoodNutrient> */
     #[ORM\OneToMany(targetEntity: FoodNutrient::class, mappedBy: 'food', orphanRemoval: true, cascade: ['persist'])]
