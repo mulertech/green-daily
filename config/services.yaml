@@ -23,3 +23,6 @@ services:
         arguments:
             $webhookUrl: '%env(N8N_RECIPE_WEBHOOK_URL)%'
             $webhookToken: '%env(N8N_WEBHOOK_TOKEN)%'
+
+    Twig\Extra\Markdown\MarkdownInterface:
+        factory: ['App\Twig\MarkdownConverterFactory', 'create']

@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+.markdown :where(h1) {
+    @apply mb-3 mt-4 text-xl font-bold text-emerald-700;
+}
+.markdown :where(h2) {
+    @apply mb-2 mt-5 text-base font-semibold text-slate-800;
+}
+.markdown :where(h3) {
+    @apply mb-2 mt-4 text-sm font-semibold text-slate-800;
+}
+.markdown :where(p) {
+    @apply my-2 text-sm leading-relaxed text-slate-700;
+}
+.markdown :where(ul, ol) {
+    @apply my-2 space-y-1 pl-5 text-sm text-slate-700;
+}
+.markdown :where(ul) { @apply list-disc; }
+.markdown :where(ol) { @apply list-decimal; }
+.markdown :where(strong) { @apply font-semibold text-slate-900; }
+.markdown :where(table) {
+    @apply my-3 w-full border-collapse text-sm;
+}
+.markdown :where(th, td) {
+    @apply border border-slate-200 px-2 py-1 text-left align-top;
+}
+.markdown :where(th) {
+    @apply bg-slate-50 font-semibold text-slate-700;
+}

@@ -14,7 +14,7 @@
                 {{ suggestion.responseMarkdown }}
             </div>
         {% else %}
-            <article class="prose prose-slate prose-sm max-w-none rounded-lg bg-white px-5 py-4 shadow-sm">
+            <article class="markdown max-w-none rounded-lg bg-white px-5 py-4 shadow-sm">
                 {{ suggestion.responseMarkdown|markdown_to_html }}
             </article>
         {% endif %}
