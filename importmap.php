@@ -20,4 +20,7 @@ return [
         'path' => './assets/foods-search.js',
         'entrypoint' => true,
     ],
+    'es-module-shims' => [
+        'version' => '2.8.1',
+    ],
 ];
