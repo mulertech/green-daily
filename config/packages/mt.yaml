@@ -1,0 +1,41 @@
+framework:
+  messenger:
+    transports:
+      async:
+        dsn: 'doctrine://default'
+
+when@prod:
+  framework:
+    asset_mapper:
+      importmap_polyfill: false
+    # Base URI used to generate absolute URLs outside HTTP context
+    # (Messenger workers, console commands, emails)
+    router:
+      default_uri: '%env(DEFAULT_URI)%'
+    # Trust all proxies from private networks (Docker internal networks)
+    # This is required when running behind Traefik
+    trusted_proxies: '127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16'
+
+    # Trust all common forwarded headers from Traefik
+    trusted_headers: [ 'x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port', 'x-forwarded-prefix' ]
+
+    # Session configuration for production behind HTTPS proxy
+    session:
+      # Auto-detect secure based on trusted headers
+      cookie_secure: auto
+      # Lax for better compatibility with redirects
+      cookie_samesite: lax
+      # Use default handler but with explicit configuration
+      handler_id: null
+      # Set cookie path to root
+      cookie_path: /
+    messenger:
+      transports:
+        async:
+          options:
+            # Doctrine configuration
+            auto_setup: true
+            queue_name: async
+          retry_strategy:
+            delay: 1000
+            max_delay: 3600000
