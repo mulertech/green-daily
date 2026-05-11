@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\RecipeSuggestion;
 use App\Entity\User;
+use App\Enum\MealType;
 use App\Service\Recipe\RecipeCalculator;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -26,7 +27,7 @@ final readonly class RecipeSuggester
     ) {
     }
 
-    public function suggest(User $user, \DateTimeImmutable $day): RecipeSuggestion
+    public function suggest(User $user, \DateTimeImmutable $day, MealType $mealType): RecipeSuggestion
     {
         $intake = $this->intakeCalculator->compute($user, $day);
 
@@ -41,6 +42,7 @@ final readonly class RecipeSuggester
         }
 
         $suggestion = new RecipeSuggestion($user, $payload);
+        $suggestion->setMealType($mealType);
         $this->em->persist($suggestion);
 
         $start = microtime(true);
@@ -56,7 +58,10 @@ final readonly class RecipeSuggester
                     'user_id' => $user->getId(),
                     'date' => $day->format('Y-m-d'),
                     'locale' => 'fr',
-                    'constraints' => ['vegetarian' => true],
+                    'constraints' => [
+                        'vegetarian' => true,
+                        'meal_type' => $mealType->value,
+                    ],
                     'remaining' => $payload,
                 ],
                 'timeout' => 60,

@@ -70,13 +70,21 @@
         </section>
 
         <section class="mt-6">
-            <form method="post" action="{{ path('app_recipe_suggest') }}">
-                <input type="hidden" name="_token" value="{{ csrf_token('recipe-suggest') }}">
-                <button type="submit"
-                        class="w-full rounded-lg border border-emerald-200 bg-white px-4 py-3 text-sm font-medium text-emerald-700 shadow-sm transition hover:bg-emerald-50">
-                    🍲 Suggérer une recette pour combler la journée
-                </button>
-            </form>
+            <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Suggérer une recette</h2>
+            <div class="grid grid-cols-4 gap-2">
+                {% for meal in meal_types %}
+                    <form method="post" action="{{ path('app_recipe_suggest') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('recipe-suggest') }}">
+                        <input type="hidden" name="meal_type" value="{{ meal.value }}">
+                        <button type="submit"
+                                title="{{ meal.label }}"
+                                class="flex w-full flex-col items-center justify-center gap-1 rounded-lg border border-emerald-200 bg-white px-1 py-3 text-xs font-medium text-emerald-700 shadow-sm transition hover:bg-emerald-50">
+                            <span class="text-2xl leading-none" aria-hidden="true">{{ meal.icon }}</span>
+                            <span class="truncate">{{ meal.label }}</span>
+                        </button>
+                    </form>
+                {% endfor %}
+            </div>
         </section>
     </main>
 

@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\ConsumptionEntry;
 use App\Entity\User;
+use App\Enum\MealType;
 use App\Repository\FoodRepository;
 use App\Repository\RecipeSuggestionRepository;
 use App\Service\RecipeSuggester;
@@ -28,6 +29,13 @@ final class RecipeController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
+        $mealType = MealType::tryFrom((string) $request->request->get('meal_type'));
+        if (null === $mealType) {
+            $this->addFlash('error', 'Type de repas invalide.');
+
+            return $this->redirectToRoute('app_home');
+        }
+
         /** @var User $user */
         $user = $this->getUser();
 
@@ -38,7 +46,7 @@ final class RecipeController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        $suggestion = $suggester->suggest($user, new \DateTimeImmutable('today'));
+        $suggestion = $suggester->suggest($user, new \DateTimeImmutable('today'), $mealType);
 
         return $this->render('recipe/show.html.twig', [
             'suggestion' => $suggestion,

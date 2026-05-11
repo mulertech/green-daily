@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Enum\MealType;
 use App\Repository\ConsumptionEntryRepository;
 use App\Service\DailyIntakeCalculator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,6 +31,7 @@ final class DashboardController extends AbstractController
             'today' => $today,
             'intake' => $intake,
             'entries' => $todayEntries,
+            'meal_types' => MealType::cases(),
         ]);
     }
 }

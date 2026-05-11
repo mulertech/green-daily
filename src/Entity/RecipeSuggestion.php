@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Enum\MealType;
 use App\Repository\RecipeSuggestionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -39,6 +40,9 @@ class RecipeSuggestion
     #[ORM\Column(name: 'recipe_data', type: Types::JSON, nullable: true)]
     private ?array $recipeData = null;
 
+    #[ORM\Column(name: 'meal_type', type: Types::STRING, length: 16, enumType: MealType::class, nullable: true)]
+    private ?MealType $mealType = null;
+
     #[ORM\Column(length: 16)]
     private string $status;
 
@@ -64,6 +68,16 @@ class RecipeSuggestion
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    public function getMealType(): ?MealType
+    {
+        return $this->mealType;
+    }
+
+    public function setMealType(?MealType $mealType): void
+    {
+        $this->mealType = $mealType;
     }
 
     public function getRequestedAt(): \DateTimeImmutable
