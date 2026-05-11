@@ -67,9 +67,64 @@ class FoodRepository extends ServiceEntityRepository
 
     private function buildOrTsQuery(string $query): ?string
     {
+        $terms = $this->cleanTerms($query);
+
+        return [] === $terms ? null : implode(' | ', $terms);
+    }
+
+    /**
+     * Autocomplete: each typed word is treated as a prefix (AND between words).
+     * Boosts entries whose name STARTS with the typed query (unaccent-insensitive).
+     *
+     * @return list<array{id: int, label: string}>
+     */
+    public function search(string $query, int $limit = 15): array
+    {
+        $tsquery = $this->buildPrefixAndTsQuery($query);
+        if (null === $tsquery) {
+            return [];
+        }
+
+        $namePrefix = trim($query).'%';
+
+        $sql = <<<'SQL'
+            SELECT id, name_fr AS label
+            FROM food
+            WHERE search_vector @@ to_tsquery('french_unaccent', :q)
+            ORDER BY CASE WHEN unaccent(name_fr) ILIKE unaccent(:prefix) THEN 0 ELSE 1 END,
+                     ts_rank(search_vector, to_tsquery('french_unaccent', :q)) DESC,
+                     length(name_fr) ASC
+            LIMIT :lim
+        SQL;
+
+        $rows = $this->getEntityManager()
+            ->getConnection()
+            ->executeQuery(
+                $sql,
+                ['q' => $tsquery, 'prefix' => $namePrefix, 'lim' => $limit],
+                ['lim' => ParameterType::INTEGER],
+            )
+            ->fetchAllAssociative();
+
+        return array_map(
+            static fn (array $r): array => ['id' => (int) $r['id'], 'label' => (string) $r['label']],
+            $rows,
+        );
+    }
+
+    private function buildPrefixAndTsQuery(string $query): ?string
+    {
+        $terms = $this->cleanTerms($query);
+
+        return [] === $terms ? null : implode(' & ', array_map(static fn (string $t): string => $t.':*', $terms));
+    }
+
+    /** @return list<string> */
+    private function cleanTerms(string $query): array
+    {
         $query = trim($query);
         if ('' === $query) {
-            return null;
+            return [];
         }
 
         $terms = preg_split('/[\s,;]+/u', $query) ?: [];
@@ -81,40 +136,6 @@ class FoodRepository extends ServiceEntityRepository
             }
         }
 
-        if ([] === $clean) {
-            return null;
-        }
-
-        return implode(' | ', $clean);
-    }
-
-    /**
-     * @return list<array{id: int, label: string}>
-     */
-    public function search(string $query, int $limit = 15): array
-    {
-        $query = trim($query);
-        if ('' === $query) {
-            return [];
-        }
-
-        $sql = <<<'SQL'
-            SELECT id, name_fr AS label
-            FROM food
-            WHERE search_vector @@ websearch_to_tsquery('french_unaccent', :q)
-            ORDER BY ts_rank(search_vector, websearch_to_tsquery('french_unaccent', :q)) DESC,
-                     length(name_fr) ASC
-            LIMIT :lim
-        SQL;
-
-        $rows = $this->getEntityManager()
-            ->getConnection()
-            ->executeQuery($sql, ['q' => $query, 'lim' => $limit], ['lim' => ParameterType::INTEGER])
-            ->fetchAllAssociative();
-
-        return array_map(
-            static fn (array $r): array => ['id' => (int) $r['id'], 'label' => (string) $r['label']],
-            $rows,
-        );
+        return $clean;
     }
 }
