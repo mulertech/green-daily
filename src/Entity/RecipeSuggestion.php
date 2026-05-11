@@ -61,6 +61,11 @@ class RecipeSuggestion
         return $this->id;
     }
 
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
     public function getRequestedAt(): \DateTimeImmutable
     {
         return $this->requestedAt;

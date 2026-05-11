@@ -98,6 +98,17 @@
                     </section>
                 {% endif %}
             </article>
+
+            {% set matched_count = recipe.ingredients|filter(i => i.matched)|length %}
+            {% if matched_count > 0 %}
+                <form method="post" action="{{ path('app_recipe_add_to_day', { id: suggestion.id }) }}" class="mt-4">
+                    <input type="hidden" name="_token" value="{{ csrf_token('recipe-add-' ~ suggestion.id) }}">
+                    <button type="submit"
+                            class="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-base font-medium text-white shadow-sm transition hover:bg-emerald-700">
+                        Ajouter à ma journée ({{ matched_count }} ingrédient{{ matched_count > 1 ? 's' : '' }})
+                    </button>
+                </form>
+            {% endif %}
         {% endif %}
 
         <p class="mt-6 text-center text-sm">
