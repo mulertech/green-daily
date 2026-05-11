@@ -2,6 +2,8 @@
 
 {% block title %}Ajouter un aliment — Green Daily{% endblock %}
 
+{% block importmap %}{{ importmap(['app', 'foods-search']) }}{% endblock %}
+
 {% block body %}
     <main class="mx-auto max-w-md px-4 py-6">
         <header class="mb-6 flex items-center gap-3">
@@ -26,6 +28,8 @@
                 <input type="text" id="food_query" name="food_query" list="foods-datalist"
                        value="{{ food_query }}" autocomplete="off" required autofocus
                        placeholder="Tapez au moins 2 lettres…"
+                       data-foods-search="{{ path('api_foods_search') }}"
+                       data-hidden-name="food_id"
                        class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none">
                 <datalist id="foods-datalist"></datalist>
             </div>
@@ -43,17 +47,4 @@
             </button>
         </form>
     </main>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="module">
-        import { initFoodSearch } from 'foods-search';
-        initFoodSearch({
-            input: document.getElementById('food_query'),
-            hidden: document.getElementById('food_id'),
-            datalist: document.getElementById('foods-datalist'),
-            url: '{{ path('api_foods_search') }}',
-        });
-    </script>
 {% endblock %}

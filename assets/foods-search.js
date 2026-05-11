@@ -1,4 +1,4 @@
-export function initFoodSearch({ input, hidden, datalist, url }) {
+function init({ input, hidden, datalist, url }) {
     const cache = new Map();
     let timer = null;
 
@@ -39,4 +39,16 @@ export function initFoodSearch({ input, hidden, datalist, url }) {
 
     input.addEventListener('change', setHiddenFromInput);
     input.form?.addEventListener('submit', setHiddenFromInput);
+}
+
+for (const input of document.querySelectorAll('input[data-foods-search]')) {
+    const datalistId = input.getAttribute('list');
+    const datalist = datalistId ? document.getElementById(datalistId) : null;
+    const hiddenName = input.dataset.hiddenName ?? 'food_id';
+    const hidden = input.form?.elements.namedItem(hiddenName);
+    const url = input.dataset.foodsSearch;
+
+    if (!datalist || !hidden || !url) continue;
+
+    init({ input, hidden, datalist, url });
 }

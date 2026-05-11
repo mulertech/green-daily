@@ -18,5 +18,6 @@ return [
     ],
     'foods-search' => [
         'path' => './assets/foods-search.js',
+        'entrypoint' => true,
     ],
 ];
