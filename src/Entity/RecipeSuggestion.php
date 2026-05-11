@@ -35,6 +35,10 @@ class RecipeSuggestion
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $responseMarkdown = null;
 
+    /** @var array<string, mixed>|null */
+    #[ORM\Column(name: 'recipe_data', type: Types::JSON, nullable: true)]
+    private ?array $recipeData = null;
+
     #[ORM\Column(length: 16)]
     private string $status;
 
@@ -62,6 +66,12 @@ class RecipeSuggestion
         return $this->requestedAt;
     }
 
+    /** @return array<string, array{consumed: float, target: float|null, remaining: float|null, unit: string}> */
+    public function getTargetNutrients(): array
+    {
+        return $this->targetNutrients;
+    }
+
     public function getResponseMarkdown(): ?string
     {
         return $this->responseMarkdown;
@@ -77,10 +87,22 @@ class RecipeSuggestion
         return self::STATUS_OK === $this->status;
     }
 
-    public function markSuccess(string $markdown, int $durationMs): void
+    /** @return array<string, mixed>|null */
+    public function getRecipeData(): ?array
+    {
+        return $this->recipeData;
+    }
+
+    /** @param array<string, mixed>|null $data */
+    public function setRecipeData(?array $data): void
+    {
+        $this->recipeData = $data;
+    }
+
+    public function markSuccess(string $rawBody, int $durationMs): void
     {
         $this->status = self::STATUS_OK;
-        $this->responseMarkdown = $markdown;
+        $this->responseMarkdown = $rawBody;
         $this->durationMs = $durationMs;
     }
 

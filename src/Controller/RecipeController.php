@@ -38,6 +38,7 @@ final class RecipeController extends AbstractController
 
         return $this->render('recipe/show.html.twig', [
             'suggestion' => $suggestion,
+            'targets' => $suggestion->getTargetNutrients(),
         ]);
     }
 }

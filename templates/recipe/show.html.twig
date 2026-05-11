@@ -13,9 +13,90 @@
             <div class="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
                 {{ suggestion.responseMarkdown }}
             </div>
+        {% elseif suggestion.recipeData is null %}
+            <div class="rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-700">
+                La réponse n'a pas pu être analysée. Réessaie ou vérifie le workflow n8n.
+            </div>
         {% else %}
-            <article class="markdown max-w-none rounded-lg bg-white px-5 py-4 shadow-sm">
-                {{ suggestion.responseMarkdown|markdown_to_html }}
+            {% set recipe = suggestion.recipeData %}
+            <article class="markdown space-y-4 rounded-lg bg-white px-5 py-4 shadow-sm">
+                <header>
+                    <h1>{{ recipe.title }}</h1>
+                    <p>
+                        <strong>
+                            Pour {{ recipe.servings }} personne{{ recipe.servings > 1 ? 's' : '' }}
+                            {% if recipe.prep_time_min %} — {{ recipe.prep_time_min }} min{% endif %}
+                        </strong>
+                    </p>
+                </header>
+
+                <section>
+                    <h2>Ingrédients</h2>
+                    <ul>
+                        {% for ing in recipe.ingredients %}
+                            <li>
+                                {{ ing.grams|number_format(0, ',', ' ') }} g — {{ ing.name }}
+                                {% if ing.note %}<em class="text-slate-500">({{ ing.note }})</em>{% endif %}
+                                {% if not ing.matched %}
+                                    <span class="ml-1 inline-block rounded bg-amber-100 px-1.5 py-0.5 text-xs text-amber-800">
+                                        non comptabilisé
+                                    </span>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Préparation</h2>
+                    <ol>
+                        {% for step in recipe.steps %}
+                            <li>{{ step }}</li>
+                        {% endfor %}
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Apports calculés (par portion)</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nutriment</th>
+                                <th>Apport</th>
+                                <th>Cible</th>
+                                <th>% cible</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for code, total in recipe.apports %}
+                                {% set enum_case = constant('App\\Enum\\NutrientCode::' ~ code) %}
+                                {% set target = targets[code].target ?? null %}
+                                {% set pct = target ? (total / target * 100)|round : null %}
+                                <tr>
+                                    <td>{{ enum_case.label }}</td>
+                                    <td>{{ total|number_format(1, ',', ' ') }} {{ enum_case.unit }}</td>
+                                    <td>{{ target ? (target|number_format(0, ',', ' ') ~ ' ' ~ enum_case.unit) : '—' }}</td>
+                                    <td>{{ pct is not null ? pct ~ ' %' : '—' }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% set unmatched = recipe.ingredients|filter(i => not i.matched) %}
+                    {% if unmatched|length > 0 %}
+                        <p class="mt-2 text-xs text-amber-700">
+                            ⚠ {{ unmatched|length }} ingrédient(s) non trouvé(s) dans CIQUAL et donc non comptabilisé(s) :
+                            {{ unmatched|map(i => i.name)|join(', ') }}.
+                        </p>
+                    {% endif %}
+                </section>
+
+                {% if recipe.rationale %}
+                    <section>
+                        <h2>Pourquoi cette recette</h2>
+                        <p>{{ recipe.rationale }}</p>
+                    </section>
+                {% endif %}
             </article>
         {% endif %}
 
