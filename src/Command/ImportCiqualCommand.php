@@ -77,38 +77,27 @@ final class ImportCiqualCommand extends Command
             return Command::FAILURE;
         }
 
-        $reader = IOFactory::createReaderForFile($path);
-        $reader->setReadDataOnly(true);
-        $spreadsheet = $reader->load($path);
-        $sheet = $spreadsheet->getActiveSheet();
+        $rowIterator = $this->isCsv($path) ? $this->streamCsv($path) : $this->loadSpreadsheetRows($path);
 
-        $rows = $sheet->toArray(null, false, false, false);
-        if ([] === $rows) {
-            $io->error('Empty spreadsheet.');
-
-            return Command::FAILURE;
-        }
-
-        /** @var list<string> $header */
-        $header = array_map(static fn ($v): string => trim((string) $v), $rows[0]);
-        $colIndex = $this->resolveColumnIndexes($header, $io);
-        if (null === $colIndex) {
-            return Command::FAILURE;
-        }
-
+        $header = null;
+        $colIndex = null;
         $imported = 0;
         $batchSize = 200;
-        $total = count($rows) - 1;
 
-        $io->progressStart($total);
+        foreach ($rowIterator as $row) {
+            if (null === $header) {
+                $header = array_map(static fn ($v): string => trim((string) $v), $row);
+                $colIndex = $this->resolveColumnIndexes($header, $io);
+                if (null === $colIndex) {
+                    return Command::FAILURE;
+                }
+                continue;
+            }
 
-        for ($i = 1, $n = count($rows); $i < $n; ++$i) {
-            $row = $rows[$i];
             $alimCode = $this->str($row, $colIndex[self::COL_ALIM_CODE] ?? null);
             $nameFr = $this->str($row, $colIndex[self::COL_NAME] ?? null);
 
             if ('' === $alimCode || '' === $nameFr) {
-                $io->progressAdvance();
                 continue;
             }
 
@@ -146,18 +135,62 @@ final class ImportCiqualCommand extends Command
             if (0 === $imported % $batchSize) {
                 $this->em->flush();
                 $this->em->clear();
+                $io->write(sprintf("\r%d foods imported…", $imported));
             }
-
-            $io->progressAdvance();
         }
 
         $this->em->flush();
         $this->em->clear();
-        $io->progressFinish();
 
+        $io->newLine();
         $io->success(sprintf('%d foods imported.', $imported));
 
         return Command::SUCCESS;
+    }
+
+    private function isCsv(string $path): bool
+    {
+        $ext = strtolower((string) pathinfo($path, PATHINFO_EXTENSION));
+
+        return 'csv' === $ext || 'tsv' === $ext;
+    }
+
+    /**
+     * Streams a CSV file row by row with constant memory usage.
+     *
+     * @return \Generator<int, list<string>>
+     */
+    private function streamCsv(string $path): \Generator
+    {
+        $handle = fopen($path, 'rb');
+        if (false === $handle) {
+            return;
+        }
+
+        try {
+            while (false !== ($row = fgetcsv($handle, 0, ',', '"', ''))) {
+                yield array_map(static fn ($v): string => (string) $v, $row);
+            }
+        } finally {
+            fclose($handle);
+        }
+    }
+
+    /**
+     * Loads an XLS/XLSX file fully into memory via PhpSpreadsheet.
+     *
+     * @return \Generator<int, list<string>>
+     */
+    private function loadSpreadsheetRows(string $path): \Generator
+    {
+        $reader = IOFactory::createReaderForFile($path);
+        $reader->setReadDataOnly(true);
+        $spreadsheet = $reader->load($path);
+        $sheet = $spreadsheet->getActiveSheet();
+
+        foreach ($sheet->toArray(null, false, false, false) as $row) {
+            yield array_map(static fn ($v): string => (string) $v, $row);
+        }
     }
 
     /**
