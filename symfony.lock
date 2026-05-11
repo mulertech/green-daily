@@ -47,6 +47,9 @@
             ".php-cs-fixer.dist.php"
         ]
     },
+    "mulertech/csp-bundle": {
+        "version": "v2.0.0"
+    },
     "phpstan/phpstan": {
         "version": "2.1",
         "recipe": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a153417b689f0d64b81b665f092f424",
+    "content-hash": "572c58f5970ea05487b36a3c3a2af631",
     "packages": [
         {
             "name": "composer/pcre",
@@ -1887,6 +1887,69 @@
                 }
             ],
             "time": "2026-01-02T08:56:05+00:00"
+        },
+        {
+            "name": "mulertech/csp-bundle",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mulertech/csp-bundle.git",
+                "reference": "385ba7f9ce97f57d04a41bba93545ee281e83dbf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mulertech/csp-bundle/zipball/385ba7f9ce97f57d04a41bba93545ee281e83dbf",
+                "reference": "385ba7f9ce97f57d04a41bba93545ee281e83dbf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/config": "^6.4 || ^7.0",
+                "symfony/dependency-injection": "^6.4 || ^7.0",
+                "symfony/event-dispatcher": "^6.4 || ^7.0",
+                "symfony/http-foundation": "^6.4 || ^7.0",
+                "symfony/http-kernel": "^6.4 || ^7.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^11.5 || ^12.0",
+                "symfony/routing": "^6.4 || ^7.0",
+                "twig/twig": "^3.0"
+            },
+            "suggest": {
+                "symfony/routing": "Required to use route-based CSP violation reporting",
+                "twig/twig": "Required to use the csp_nonce() Twig function"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "MulerTech\\CspBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MulerTech",
+                    "email": "contact@mulertech.com"
+                }
+            ],
+            "description": "Symfony bundle for Content Security Policy (CSP) header management with nonce support",
+            "keywords": [
+                "content-security-policy",
+                "csp",
+                "nonce",
+                "security",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/mulertech/csp-bundle/issues",
+                "source": "https://github.com/mulertech/csp-bundle/tree/v2.0.0"
+            },
+            "time": "2026-03-02T20:53:44+00:00"
         },
         {
             "name": "nette/schema",

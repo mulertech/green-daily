@@ -1492,6 +1492,18 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         ...<string, mixed>
  *     },
  * }
+ * @psalm-type MulertechCspConfig = bool|array{
+ *     enabled?: bool|Param, // Default: true
+ *     report_only?: bool|Param, // Default: false
+ *     always_add?: list<scalar|Param|null>,
+ *     report?: array{
+ *         url?: scalar|Param|null, // Default: null
+ *         route?: scalar|Param|null, // Default: null
+ *         route_params?: list<scalar|Param|null>,
+ *         chance?: int|Param, // Default: 100
+ *     },
+ *     directives?: array<string, mixed>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1505,6 +1517,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     symfonycasts_reset_password?: SymfonycastsResetPasswordConfig,
  *     symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *     twig_extra?: TwigExtraConfig,
+ *     mulertech_csp?: MulertechCspConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1521,6 +1534,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_reset_password?: SymfonycastsResetPasswordConfig,
  *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *         twig_extra?: TwigExtraConfig,
+ *         mulertech_csp?: MulertechCspConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1535,6 +1549,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_reset_password?: SymfonycastsResetPasswordConfig,
  *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *         twig_extra?: TwigExtraConfig,
+ *         mulertech_csp?: MulertechCspConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1550,6 +1565,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_reset_password?: SymfonycastsResetPasswordConfig,
  *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *         twig_extra?: TwigExtraConfig,
+ *         mulertech_csp?: MulertechCspConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
