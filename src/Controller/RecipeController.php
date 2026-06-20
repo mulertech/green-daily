@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class RecipeController extends AbstractController
@@ -23,7 +23,7 @@ final class RecipeController extends AbstractController
     public function suggest(
         Request $request,
         RecipeSuggester $suggester,
-        RateLimiterFactory $recipeSuggestLimiter,
+        RateLimiterFactoryInterface $recipeSuggestLimiter,
     ): Response {
         if (!$this->isCsrfTokenValid('recipe-suggest', (string) $request->request->get('_token'))) {
             throw $this->createAccessDeniedException();

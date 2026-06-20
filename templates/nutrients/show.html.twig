@@ -59,6 +59,18 @@
             Aliments les plus riches en {{ nutrient.label|lower }}
         </h2>
 
+        <nav class="mb-3 flex gap-2 text-sm">
+            {% set tabs = {'all': 'Tous', 'without': 'Sans viande', 'with': 'Avec viande'} %}
+            {% for value, label in tabs %}
+                {% set active = meat_filter == value %}
+                <a href="{{ path('app_nutrient_show', { code: nutrient.value, meat: value }) }}"
+                   class="rounded-full px-3 py-1 font-medium transition
+                       {{ active ? 'bg-emerald-600 text-white shadow-sm' : 'bg-white text-slate-600 shadow-sm hover:bg-slate-50' }}">
+                    {{ label }}
+                </a>
+            {% endfor %}
+        </nav>
+
         {% if foods is empty %}
             <p class="rounded-lg bg-white px-4 py-6 text-center text-sm text-slate-500 shadow-sm">
                 Aucune donnée disponible pour cet apport.
