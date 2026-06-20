@@ -27,7 +27,9 @@
                     : pct < 80 ? 'bg-amber-500'
                     : pct <= 120 ? 'bg-emerald-500'
                     : 'bg-sky-500' %}
-                <div class="rounded-lg bg-white px-4 py-3 shadow-sm">
+                <a href="{{ path('app_nutrient_show', { code: stat.code.value }) }}"
+                   class="block rounded-lg bg-white px-4 py-3 shadow-sm transition hover:bg-slate-50"
+                   title="Voir les aliments riches en {{ stat.code.label }}">
                     <div class="flex items-baseline justify-between">
                         <span class="text-sm font-medium text-slate-800">{{ stat.code.label }}</span>
                         <span class="text-xs text-slate-500">
@@ -41,7 +43,7 @@
                         <div class="h-full {{ bar_class }} transition-all"
                              style="width: {{ pct is null ? 0 : (pct > 100 ? 100 : pct) }}%"></div>
                     </div>
-                </div>
+                </a>
             {% endfor %}
         </section>
 

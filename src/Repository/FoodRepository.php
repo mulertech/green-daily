@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Food;
+use App\Enum\NutrientCode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -108,6 +109,43 @@ class FoodRepository extends ServiceEntityRepository
 
         return array_map(
             static fn (array $r): array => ['id' => (int) $r['id'], 'label' => (string) $r['label']],
+            $rows,
+        );
+    }
+
+    /**
+     * Foods richest in a given nutrient, ranked by amount per 100 g (descending).
+     *
+     * @return list<array{id: int, name: string, group: ?string, amount: float}>
+     */
+    public function topByNutrient(NutrientCode $code, int $limit = 50): array
+    {
+        $sql = <<<'SQL'
+            SELECT f.id, f.name_fr AS name, f.group_name AS group_name, fn.amount_per_100g AS amount
+            FROM food_nutrient fn
+            JOIN food f ON f.id = fn.food_id
+            WHERE fn.nutrient_code = :code
+              AND fn.amount_per_100g > 0
+            ORDER BY fn.amount_per_100g DESC, length(f.name_fr) ASC
+            LIMIT :lim
+        SQL;
+
+        $rows = $this->getEntityManager()
+            ->getConnection()
+            ->executeQuery(
+                $sql,
+                ['code' => $code->value, 'lim' => $limit],
+                ['lim' => ParameterType::INTEGER],
+            )
+            ->fetchAllAssociative();
+
+        return array_map(
+            static fn (array $r): array => [
+                'id' => (int) $r['id'],
+                'name' => (string) $r['name'],
+                'group' => null !== $r['group_name'] ? (string) $r['group_name'] : null,
+                'amount' => (float) $r['amount'],
+            ],
             $rows,
         );
     }

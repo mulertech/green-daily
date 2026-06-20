@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ nutrient.label }} — Green Daily{% endblock %}
+
+{% block body %}
+    {% set pct = stat.percent %}
+    {% set remaining = stat.remaining %}
+    {% set remaining_pct = pct is not null ? (100 - pct < 0 ? 0 : 100 - pct) : null %}
+
+    <main class="mx-auto max-w-md px-4 pb-12 pt-6">
+        <header class="mb-5 flex items-center gap-3">
+            <a href="{{ path('app_home') }}" class="text-slate-500 hover:text-slate-700" aria-label="Retour">←</a>
+            <h1 class="text-xl font-bold text-emerald-700">{{ nutrient.label }}</h1>
+        </header>
+
+        <section class="mb-5 rounded-lg bg-white px-4 py-3 shadow-sm">
+            {% if stat.target is null %}
+                <p class="text-sm text-slate-600">
+                    Renseignez votre profil (sexe et date de naissance) pour connaître votre apport
+                    journalier recommandé et les quantités à consommer.
+                </p>
+                <p class="mt-2 text-sm">
+                    <a href="{{ path('app_profile') }}" class="text-emerald-700 hover:underline">Compléter mon profil →</a>
+                </p>
+            {% elseif remaining is not null and remaining <= 0 %}
+                <p class="text-sm text-emerald-700">
+                    🎉 Apport déjà atteint :
+                    <strong>{{ stat.consumed|number_format(1, ',', ' ') }} / {{ stat.target|number_format(0, ',', ' ') }} {{ nutrient.unit }}</strong>
+                    ({{ pct }} %).
+                </p>
+                <p class="mt-1 text-xs text-slate-500">
+                    Quantités ci-dessous calculées pour 100 % de l'apport journalier.
+                </p>
+            {% else %}
+                <p class="text-sm text-slate-700">
+                    Consommé aujourd'hui :
+                    <strong>{{ stat.consumed|number_format(1, ',', ' ') }} / {{ stat.target|number_format(0, ',', ' ') }} {{ nutrient.unit }}</strong>
+                    ({{ pct }} %).
+                </p>
+                <p class="mt-1 text-sm text-slate-700">
+                    Il reste <strong class="text-emerald-700">{{ remaining|number_format(1, ',', ' ') }} {{ nutrient.unit }}</strong>
+                    ({{ remaining_pct }} %) pour atteindre 100 %.
+                </p>
+                <p class="mt-1 text-xs text-slate-500">
+                    Quantité indiquée pour chaque aliment = de quoi combler ces {{ remaining_pct }} % restants.
+                </p>
+            {% endif %}
+        </section>
+
+        {% if stat.target is null %}
+            {% set need = null %}
+        {% elseif remaining is not null and remaining > 0 %}
+            {% set need = remaining %}
+        {% else %}
+            {% set need = stat.target %}
+        {% endif %}
+
+        <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">
+            Aliments les plus riches en {{ nutrient.label|lower }}
+        </h2>
+
+        {% if foods is empty %}
+            <p class="rounded-lg bg-white px-4 py-6 text-center text-sm text-slate-500 shadow-sm">
+                Aucune donnée disponible pour cet apport.
+            </p>
+        {% else %}
+            <ul class="space-y-2">
+                {% for food in foods %}
+                    {% set qty = need is not null and food.amount > 0 ? need / food.amount * 100 : null %}
+                    <li class="rounded-lg bg-white px-4 py-3 shadow-sm">
+                        <div class="flex items-baseline justify-between gap-3">
+                            <div class="min-w-0">
+                                <div class="truncate text-sm font-medium text-slate-800">{{ food.name }}</div>
+                                {% if food.group %}
+                                    <div class="truncate text-xs text-slate-400">{{ food.group }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="shrink-0 text-right">
+                                <div class="text-xs text-slate-500">
+                                    {{ food.amount|number_format(food.amount < 10 ? 2 : 1, ',', ' ') }} {{ nutrient.unit }}/100 g
+                                </div>
+                                {% if qty is not null %}
+                                    <div class="text-sm font-semibold text-emerald-700">
+                                        {{ qty < 10 ? qty|number_format(1, ',', ' ') : qty|number_format(0, ',', ' ') }} g
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p class="mt-6 text-center text-sm">
+            <a href="{{ path('app_home') }}" class="text-emerald-700 hover:underline">← Retour au dashboard</a>
+        </p>
+    </main>
+{% endblock %}

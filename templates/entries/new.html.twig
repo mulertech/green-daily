@@ -21,7 +21,7 @@
 
         <form method="post" class="space-y-4">
             <input type="hidden" name="_token" value="{{ csrf_token('new-entry') }}">
-            <input type="hidden" name="food_id" id="food_id" value="">
+            <input type="hidden" name="food_id" id="food_id" value="{{ food_id ?: '' }}">
 
             <div class="relative">
                 <label for="food_query" class="mb-1 block text-sm font-medium text-slate-700">Aliment</label>
@@ -43,10 +43,51 @@
                        class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none">
             </div>
 
-            <button type="submit"
+            <button type="submit" name="action" value="add"
                     class="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-base font-medium text-white shadow-sm transition hover:bg-emerald-700">
                 Ajouter
             </button>
+            <button type="submit" name="action" value="preview" formnovalidate
+                    class="w-full rounded-lg border border-emerald-300 bg-white px-4 py-2.5 text-base font-medium text-emerald-700 shadow-sm transition hover:bg-emerald-50">
+                Voir les apports
+            </button>
         </form>
+
+        {% if preview %}
+            <section class="mt-6 rounded-lg bg-white px-4 py-4 shadow-sm">
+                <h2 class="text-sm font-semibold text-slate-800">Apports — {{ preview.food }}</h2>
+                <p class="mb-3 text-xs text-slate-500">Pour {{ preview.quantity|number_format(0, ',', ' ') }} g</p>
+
+                {% if preview.rows is empty %}
+                    <p class="text-sm text-slate-500">Aucune donnée d'apport disponible pour cet aliment.</p>
+                {% else %}
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-left text-xs uppercase tracking-wide text-slate-400">
+                                <th class="py-1.5 font-medium">Nutriment</th>
+                                <th class="py-1.5 text-right font-medium">Apport</th>
+                                <th class="py-1.5 text-right font-medium">% AJR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in preview.rows %}
+                                <tr class="border-b border-slate-100 last:border-0">
+                                    <td class="py-1.5 text-slate-700">{{ row.label }}</td>
+                                    <td class="py-1.5 text-right text-slate-700">
+                                        {{ row.amount|number_format(row.amount < 10 ? 2 : 1, ',', ' ') }} {{ row.unit }}
+                                    </td>
+                                    <td class="py-1.5 text-right font-medium text-emerald-700">
+                                        {{ row.percent is not null ? row.percent ~ ' %' : '—' }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <p class="mt-3 text-xs text-slate-400">
+                        % AJR = part de l'apport journalier recommandé pour votre profil.
+                    </p>
+                {% endif %}
+            </section>
+        {% endif %}
     </main>
 {% endblock %}
