@@ -50,7 +50,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.95.21",
-        "mulertech/docker-dev": ">=3.10",
+        "mulertech/docker-dev": ">=3.11.2",
         "phpstan/extension-installer": "*",
         "phpstan/phpstan": "^2.2.9",
         "phpstan/phpstan-doctrine": ">=2.0.28",

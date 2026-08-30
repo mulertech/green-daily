@@ -1,6 +1,7 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
-    secret: '%env(APP_SECRET)%'
+    # Modified by mulertech/docker-dev package for Docker environment
+    secret: '%env(trim:file:APP_SECRET_FILE)%'
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true
@@ -10,6 +11,7 @@ framework:
 
 when@test:
     framework:
+        secret: '%env(APP_SECRET)%'
         test: true
         session:
             storage_factory_id: session.storage.factory.mock_file

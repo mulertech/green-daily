@@ -7,7 +7,7 @@ doctrine:
         user: '%env(default::DATABASE_USER)%'
         password: '%env(trim:file:DATABASE_PASSWORD_FILE)%'
         driver: 'pdo_pgsql'
-        server_version: '16'
+        server_version: '%env(default::DATABASE_SERVER_VERSION)%'
 
         profiling_collect_backtrace: '%kernel.debug%'
     orm:

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d05aaf3377cfd5f333b28223eebafb3",
+    "content-hash": "2a25570799a68ed50f7be0e8baf0c551",
     "packages": [
         {
             "name": "composer/pcre",
@@ -8676,16 +8676,16 @@
         },
         {
             "name": "mulertech/docker-dev",
-            "version": "v3.10.0",
+            "version": "v3.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mulertech/docker-dev.git",
-                "reference": "0597543544455ce0927617018d7a3527dfc3e858"
+                "reference": "4ebd9ec4496043ead1832359928ff937441ae4cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mulertech/docker-dev/zipball/0597543544455ce0927617018d7a3527dfc3e858",
-                "reference": "0597543544455ce0927617018d7a3527dfc3e858",
+                "url": "https://api.github.com/repos/mulertech/docker-dev/zipball/4ebd9ec4496043ead1832359928ff937441ae4cf",
+                "reference": "4ebd9ec4496043ead1832359928ff937441ae4cf",
                 "shasum": ""
             },
             "require": {
@@ -8725,9 +8725,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mulertech/docker-dev/issues",
-                "source": "https://github.com/mulertech/docker-dev/tree/v3.10.0"
+                "source": "https://github.com/mulertech/docker-dev/tree/v3.11.2"
             },
-            "time": "2026-08-07T10:01:14+00:00"
+            "time": "2026-08-29T19:42:52+00:00"
         },
         {
             "name": "myclabs/deep-copy",
