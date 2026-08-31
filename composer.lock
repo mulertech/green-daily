@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a25570799a68ed50f7be0e8baf0c551",
+    "content-hash": "602bfb04a7a622aa3a3fbc7546b647fc",
     "packages": [
         {
             "name": "composer/pcre",
@@ -1961,6 +1961,71 @@
                 "source": "https://github.com/mulertech/csp-bundle/tree/v2.1.0"
             },
             "time": "2026-08-19T15:35:51+00:00"
+        },
+        {
+            "name": "mulertech/scanner-ban-bundle",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mulertech/scanner-ban-bundle.git",
+                "reference": "53b8e5b46ad4a8fb7faaea339520c0712338e410"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mulertech/scanner-ban-bundle/zipball/53b8e5b46ad4a8fb7faaea339520c0712338e410",
+                "reference": "53b8e5b46ad4a8fb7faaea339520c0712338e410",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.4",
+                "psr/cache": "^2.0 || ^3.0",
+                "psr/log": "^2.0 || ^3.0",
+                "symfony/config": "^7.0 || ^8.0",
+                "symfony/console": "^7.0 || ^8.0",
+                "symfony/dependency-injection": "^7.0 || ^8.0",
+                "symfony/event-dispatcher": "^7.0 || ^8.0",
+                "symfony/http-foundation": "^7.0 || ^8.0",
+                "symfony/http-kernel": "^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "mulertech/docker-dev": "^3.2",
+                "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^12.0",
+                "roave/security-advisories": "dev-latest",
+                "symfony/cache": "^7.0 || ^8.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "MulerTech\\ScannerBan\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sébastien Muler",
+                    "email": "sebastien.muler@mulertech.net"
+                }
+            ],
+            "description": "Symfony bundle banning scanners on what they request, never on what they claim to be",
+            "keywords": [
+                "ban",
+                "bundle",
+                "hardening",
+                "php",
+                "scanner",
+                "security",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/mulertech/scanner-ban-bundle/issues",
+                "source": "https://github.com/mulertech/scanner-ban-bundle/tree/v1.0.0"
+            },
+            "time": "2026-08-30T15:53:00+00:00"
         },
         {
             "name": "nette/schema",

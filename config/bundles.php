@@ -14,4 +14,7 @@ return [
     Symfonycasts\TailwindBundle\SymfonycastsTailwindBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     MulerTech\CspBundle\MulerTechCspBundle::class => ['all' => true],
+    // Development answers 404 all day long and the test client sends no User-Agent, both of
+    // which the bundle reads as hostile. Production is the only place it has anything to judge.
+    MulerTech\ScannerBan\MulerTechScannerBanBundle::class => ['prod' => true],
 ];

@@ -1,0 +1,8 @@
+# Scoped like the bundle itself, which is registered for production alone: development answers 404
+# all day long and the test client sends no User-Agent, both of which the bundle reads as hostile.
+when@prod:
+    mulertech_scanner_ban:
+        login_route: app_login
+        # The scanner channel writes unconditionally: a ban and a rejected probe both answer before
+        # the error listener runs, so fingers_crossed never flushes and would drop their only trace.
+        logger_service: monolog.logger.scanner

@@ -1497,6 +1497,28 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     },
  *     directives?: array<string, mixed>,
  * }
+ * @psalm-type MulertechScannerBanConfig = array{
+ *     enabled?: bool|Param, // Default: true
+ *     cache_service?: scalar|Param|null, // Default: "cache.app"
+ *     logger_service?: scalar|Param|null, // Default: "logger"
+ *     login_route?: scalar|Param|null, // Route name of the firewall check_path // Default: "app_login"
+ *     allowed_ips?: scalar|Param|null, // Comma separated addresses or CIDR ranges, never counted and never blocked // Default: ""
+ *     max_score?: int|Param, // Default: 10
+ *     probe_weight?: int|Param, // Default: 10
+ *     not_found_weight?: int|Param, // Default: 1
+ *     window?: int|Param, // Default: 300
+ *     ban_duration?: int|Param, // Default: 86400
+ *     digest_ttl?: int|Param, // Default: 172800
+ *     digest_max_entries?: int|Param, // Default: 500
+ *     crawler_cache_ttl?: int|Param, // Default: 86400
+ *     user_agent_min_length?: int|Param, // Default: 10
+ *     probe_paths?: list<scalar|Param|null>,
+ *     asset_prefixes?: list<scalar|Param|null>,
+ *     asset_extensions?: list<scalar|Param|null>,
+ *     exempt_paths?: list<scalar|Param|null>,
+ *     user_agent_blocklist?: list<scalar|Param|null>,
+ *     verified_crawlers?: array<string, list<scalar|Param|null>>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1543,6 +1565,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *         twig_extra?: TwigExtraConfig,
  *         mulertech_csp?: MulertechCspConfig,
+ *         mulertech_scanner_ban?: MulertechScannerBanConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,

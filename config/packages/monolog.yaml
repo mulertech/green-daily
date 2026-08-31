@@ -1,6 +1,7 @@
 monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+        - scanner # Scanner bans: they answer before the error listener, nothing else records them
 
 when@dev:
     monolog:
@@ -52,4 +53,10 @@ when@prod:
                 type: stream
                 channels: [deprecation]
                 path: php://stderr
+                formatter: monolog.formatter.json
+            scanner:
+                type: stream
+                channels: [scanner]
+                path: php://stderr
+                level: info
                 formatter: monolog.formatter.json

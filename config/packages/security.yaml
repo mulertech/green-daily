@@ -18,8 +18,15 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                # A POST whose body is not a form is not a login attempt: it reaches the page
+                # instead of failing inside the authenticator on a missing username field.
+                form_only: true
                 enable_csrf: true
                 default_target_path: app_home
+            # Brute force: 5 attempts per 15 minutes on the username plus IP pair.
+            login_throttling:
+                max_attempts: 5
+                interval: '15 minutes'
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 2592000  # 30 jours
@@ -37,6 +44,11 @@ security:
 
 when@test:
     security:
+        firewalls:
+            main:
+                # Tests sign in again and again against the same counters: the limit must not fire.
+                login_throttling:
+                    max_attempts: 10000
         password_hashers:
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
                 algorithm: auto
