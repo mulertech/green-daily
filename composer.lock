@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "602bfb04a7a622aa3a3fbc7546b647fc",
+    "content-hash": "74103c8d4c8a3bb349d146c9587cba01",
     "packages": [
         {
             "name": "composer/pcre",
@@ -1964,16 +1964,16 @@
         },
         {
             "name": "mulertech/scanner-ban-bundle",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mulertech/scanner-ban-bundle.git",
-                "reference": "53b8e5b46ad4a8fb7faaea339520c0712338e410"
+                "reference": "7eed8317359ebca117de6c2076ea86d76709e566"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mulertech/scanner-ban-bundle/zipball/53b8e5b46ad4a8fb7faaea339520c0712338e410",
-                "reference": "53b8e5b46ad4a8fb7faaea339520c0712338e410",
+                "url": "https://api.github.com/repos/mulertech/scanner-ban-bundle/zipball/7eed8317359ebca117de6c2076ea86d76709e566",
+                "reference": "7eed8317359ebca117de6c2076ea86d76709e566",
                 "shasum": ""
             },
             "require": {
@@ -2023,9 +2023,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mulertech/scanner-ban-bundle/issues",
-                "source": "https://github.com/mulertech/scanner-ban-bundle/tree/v1.0.0"
+                "source": "https://github.com/mulertech/scanner-ban-bundle/tree/v1.0.1"
             },
-            "time": "2026-08-30T15:53:00+00:00"
+            "time": "2026-08-31T11:53:00+00:00"
         },
         {
             "name": "nette/schema",
