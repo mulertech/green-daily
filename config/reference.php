@@ -1494,8 +1494,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         route?: scalar|Param|null, // Default: null
  *         route_params?: list<scalar|Param|null>,
  *         chance?: int|Param, // Default: 100
+ *         markers?: list<scalar|Param|null>,
  *     },
  *     directives?: array<string, mixed>,
+ *     report_only_directives?: array<string, mixed>,
  * }
  * @psalm-type MulertechScannerBanConfig = array{
  *     enabled?: bool|Param, // Default: true

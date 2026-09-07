@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "74103c8d4c8a3bb349d146c9587cba01",
+    "content-hash": "2771c7dc2eedec399e38ca208fa3c2eb",
     "packages": [
         {
             "name": "composer/pcre",
@@ -1898,16 +1898,16 @@
         },
         {
             "name": "mulertech/csp-bundle",
-            "version": "v2.1.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mulertech/csp-bundle.git",
-                "reference": "9c5bf4811264ac1a80c65e93868ae2de92223884"
+                "reference": "75dd99fad464eb78bc3681eb6d43c774e6c4603d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mulertech/csp-bundle/zipball/9c5bf4811264ac1a80c65e93868ae2de92223884",
-                "reference": "9c5bf4811264ac1a80c65e93868ae2de92223884",
+                "url": "https://api.github.com/repos/mulertech/csp-bundle/zipball/75dd99fad464eb78bc3681eb6d43c774e6c4603d",
+                "reference": "75dd99fad464eb78bc3681eb6d43c774e6c4603d",
                 "shasum": ""
             },
             "require": {
@@ -1958,9 +1958,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mulertech/csp-bundle/issues",
-                "source": "https://github.com/mulertech/csp-bundle/tree/v2.1.0"
+                "source": "https://github.com/mulertech/csp-bundle/tree/v3.1.0"
             },
-            "time": "2026-08-19T15:35:51+00:00"
+            "time": "2026-09-07T09:06:00+00:00"
         },
         {
             "name": "mulertech/scanner-ban-bundle",
