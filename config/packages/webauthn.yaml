@@ -1,3 +1,9 @@
+# The key management page shipped by the passkey bundle drives the registration ceremony from
+# the same two paths as the endpoints below, so they are named once here rather than twice.
+parameters:
+    app.passkey_register_options_path: /passkey/register/options
+    app.passkey_register_path: /passkey/register
+
 webauthn:
     # A rejected ceremony answers without tracing anything: the library keeps its reason to
     # itself as long as it is given no logger. Without this, the failure has nothing but the
@@ -21,8 +27,8 @@ webauthn:
             default:
                 profile: default
                 user_entity_guesser: Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser
-                options_path: /passkey/register/options
-                result_path: /passkey/register
+                options_path: '%app.passkey_register_options_path%'
+                result_path: '%app.passkey_register_path%'
 
 # WebAuthn demands an HTTPS origin, and the library refuses the ceremony without one, even on
 # localhost. The development server serves over plain HTTP: the local origin is therefore declared

@@ -1682,6 +1682,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * @psalm-type MulertechPasskeyConfig = array{
  *     user_class?: scalar|Param|null, // The application user entity, which implements PasskeyUserInterface.
  *     user_provider?: scalar|Param|null, // User provider service queried to find an account by its identifier. // Default: "security.user.provider.concrete.app_user_provider"
+ *     register_options_url?: scalar|Param|null, // Path of the registration options endpoint, as declared in webauthn.controllers.creation.
+ *     register_url?: scalar|Param|null, // Path of the registration result endpoint, as declared in webauthn.controllers.creation.
  *     template?: scalar|Param|null, // Template of the key management page. Overridable in templates/bundles/MulerTechPasskeyBundle/. // Default: "@MulerTechPasskey/passkey/index.html.twig"
  * }
  * @psalm-type ConfigType = array{

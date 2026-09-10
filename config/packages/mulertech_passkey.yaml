@@ -1,2 +1,4 @@
 mulertech_passkey:
     user_class: App\Entity\User
+    register_options_url: '%app.passkey_register_options_path%'
+    register_url: '%app.passkey_register_path%'
