@@ -24,6 +24,22 @@
             <a href="{{ path('app_profile') }}" class="text-sm text-slate-500 hover:text-slate-700">⚙️</a>
         </header>
 
+        {% if references_missing %}
+            <div class="mb-4 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                <p class="font-semibold">Aucun repère nutritionnel chargé.</p>
+                <p class="mt-1">Les apports du jour restent justes, mais rien ne permet de les situer :
+                    les barres de progression resteront vides tant que la table des références est absente.
+                    Elle se charge avec <code class="rounded bg-amber-100 px-1">app:rda:seed</code>.</p>
+            </div>
+        {% elseif profile_incomplete %}
+            <div class="mb-4 rounded-lg border border-sky-300 bg-sky-50 px-4 py-3 text-sm text-sky-900">
+                <p class="font-semibold">Profil incomplet.</p>
+                <p class="mt-1">Votre sexe et votre date de naissance déterminent les apports recommandés :
+                    sans eux, les barres de progression restent vides.
+                    <a href="{{ path('app_profile') }}" class="font-medium underline">Compléter mon profil</a>.</p>
+            </div>
+        {% endif %}
+
         {% for message in app.flashes('success') %}
             <div class="mb-4 rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{{ message }}</div>
         {% endfor %}

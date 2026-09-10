@@ -1,0 +1,2 @@
+mulertech_passkey:
+    user_class: App\Entity\User

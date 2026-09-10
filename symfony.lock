@@ -22,6 +22,18 @@
             "src/Repository/.gitignore"
         ]
     },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
+        },
+        "files": [
+            "src/DataFixtures/AppFixtures.php"
+        ]
+    },
     "doctrine/doctrine-migrations-bundle": {
         "version": "3.7",
         "recipe": {
@@ -49,6 +61,9 @@
     },
     "mulertech/csp-bundle": {
         "version": "v2.0.0"
+    },
+    "mulertech/passkey-bundle": {
+        "version": "v1.0.0"
     },
     "mulertech/scanner-ban-bundle": {
         "version": "v1.0.0"
@@ -279,6 +294,15 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/uid": {
+        "version": "8.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "7.0",
+            "ref": "0df5844274d871b37fc3816c57a768ffc60a43a5"
+        }
+    },
     "symfony/validator": {
         "version": "7.4",
         "recipe": {
@@ -330,5 +354,8 @@
     },
     "twig/extra-bundle": {
         "version": "v3.24.0"
+    },
+    "web-auth/webauthn-symfony-bundle": {
+        "version": "5.3.8"
     }
 }

@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/*
+ * Tailwind does not scan `vendor/`, which git ignores: templates shipped by a bundle have to be
+ * declared, otherwise their classes are never generated and the page renders unstyled.
+ */
+@source "../../vendor/mulertech/passkey-bundle/templates";
+
 .markdown h1 {
     font-size: 1.25rem;
     line-height: 1.75rem;

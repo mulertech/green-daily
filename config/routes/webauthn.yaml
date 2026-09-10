@@ -1,0 +1,6 @@
+# The web-auth bundle declares the ceremony entry points through a dedicated loader rather than
+# a route file: without this import, the paths configured in webauthn.yaml and under the firewall
+# do not exist and the ceremony answers 404.
+webauthn_controllers:
+    resource: .
+    type: webauthn

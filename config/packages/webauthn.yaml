@@ -1,0 +1,34 @@
+webauthn:
+    # A rejected ceremony answers without tracing anything: the library keeps its reason to
+    # itself as long as it is given no logger. Without this, the failure has nothing but the
+    # browser's generic message to make itself known.
+    logger: 'monolog.logger'
+    creation_profiles:
+        default:
+            rp:
+                id: '%env(WEBAUTHN_RP_ID)%'
+            authenticator_selection_criteria:
+                authenticator_attachment: platform
+                user_verification: required
+                resident_key: required
+                require_resident_key: true
+    request_profiles:
+        default:
+            user_verification: required
+    controllers:
+        enabled: true
+        creation:
+            default:
+                profile: default
+                user_entity_guesser: Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser
+                options_path: /passkey/register/options
+                result_path: /passkey/register
+
+# WebAuthn demands an HTTPS origin, and the library refuses the ceremony without one, even on
+# localhost. The development server serves over plain HTTP: the local origin is therefore declared
+# as allowed, and in development only. In production the origin is HTTPS and this list stays empty,
+# which restores the default requirement.
+when@dev:
+    webauthn:
+        allowed_origins:
+            - '%env(WEBAUTHN_ALLOWED_ORIGIN)%'

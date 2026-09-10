@@ -27,9 +27,17 @@ security:
             login_throttling:
                 max_attempts: 5
                 interval: '15 minutes'
+            webauthn:
+                authentication:
+                    enabled: true
+                    routes:
+                        options_path: /passkey/login/options
+                        result_path: /passkey/login
+                registration:
+                    enabled: false
             remember_me:
                 secret: '%kernel.secret%'
-                lifetime: 2592000  # 30 jours
+                lifetime: 2592000  # 30 days
                 path: /
                 secure: auto
                 samesite: lax
@@ -40,6 +48,10 @@ security:
 
     access_control:
         - { path: ^/login$, roles: PUBLIC_ACCESS }
+        # The passkey login ceremony addresses someone who is not signed in yet: behind
+        # ROLE_USER it redirects to the login page instead of starting. Registering a key, on
+        # the other hand, stays reserved for an open session.
+        - { path: ^/passkey/login, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_USER }
 
 when@test:

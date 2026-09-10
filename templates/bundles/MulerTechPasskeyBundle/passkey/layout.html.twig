@@ -1,0 +1,21 @@
+{#
+    The bundle ships the key management page with no chrome: overriding this single gateway places
+    it inside the site, without touching the page itself nor preventing its updates.
+#}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="mx-auto max-w-md px-4 pb-28 pt-6">
+        {# Flash messages are rendered page by page in this project: without this loop, the ones
+           set by deleting a key would wait for the next page that displays them. #}
+        {% for message in app.flashes('success') %}
+            <div class="mb-4 rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{{ message }}</div>
+        {% endfor %}
+
+        {% block passkey_content %}{% endblock %}
+
+        <p class="mt-6 text-sm">
+            <a href="{{ path('app_profile') }}" class="text-emerald-700 hover:underline">← Profil</a>
+        </p>
+    </main>
+{% endblock %}

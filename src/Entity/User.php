@@ -8,14 +8,18 @@ use App\Enum\Sex;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use MulerTech\PasskeyBundle\Security\PasskeyUserInterface;
+use MulerTech\PasskeyBundle\Security\WebauthnUserHandleTrait;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '"user"')]
 #[ORM\UniqueConstraint(name: 'uniq_user_email', columns: ['email'])]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, PasskeyUserInterface
 {
+    use WebauthnUserHandleTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -58,6 +62,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): void
     {
         $this->email = strtolower(trim($email));
+    }
+
+    public function getPasskeyDisplayName(): string
+    {
+        return $this->email;
     }
 
     public function getUserIdentifier(): string
