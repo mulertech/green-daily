@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "563e4a93bc7caa3bbd2ddc8b2241e9da",
+    "content-hash": "378066627babd1cb7e275907aedfb523",
     "packages": [
         {
             "name": "brick/math",
@@ -2023,16 +2023,16 @@
         },
         {
             "name": "mulertech/passkey-bundle",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mulertech/passkey-bundle.git",
-                "reference": "23ac542bf475ca338922cdda0ae5e79117a3c42c"
+                "reference": "c339c638058239ad3d3f883bc9e40dfcc04f1cb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mulertech/passkey-bundle/zipball/23ac542bf475ca338922cdda0ae5e79117a3c42c",
-                "reference": "23ac542bf475ca338922cdda0ae5e79117a3c42c",
+                "url": "https://api.github.com/repos/mulertech/passkey-bundle/zipball/c339c638058239ad3d3f883bc9e40dfcc04f1cb1",
+                "reference": "c339c638058239ad3d3f883bc9e40dfcc04f1cb1",
                 "shasum": ""
             },
             "require": {
@@ -2089,9 +2089,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mulertech/passkey-bundle/issues",
-                "source": "https://github.com/mulertech/passkey-bundle/tree/v2.0.0"
+                "source": "https://github.com/mulertech/passkey-bundle/tree/v2.0.1"
             },
-            "time": "2026-09-10T20:05:57+00:00"
+            "time": "2026-09-10T21:35:09+00:00"
         },
         {
             "name": "mulertech/scanner-ban-bundle",

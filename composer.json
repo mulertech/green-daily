@@ -15,7 +15,7 @@
         "doctrine/orm": "^3.6.8",
         "league/commonmark": "^2.10",
         "mulertech/csp-bundle": "^3.1",
-        "mulertech/passkey-bundle": "^2.0",
+        "mulertech/passkey-bundle": "^2.0.1",
         "mulertech/scanner-ban-bundle": "^1.0.1",
         "phpoffice/phpspreadsheet": "^5.9",
         "symfony/asset": "8.1.*",
