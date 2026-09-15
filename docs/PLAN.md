@@ -134,14 +134,3 @@ Pas de PWA en v1 (sortie de scope).
 | **L4 — Saisie + dashboard** | ConsumptionEntry, calculateur AJR, dashboard mobile, ajout/suppression Turbo | Ajouter "200g lentilles cuites" reflète % fer/protéines |
 | **L5 — Recette IA** | Service `RecipeSuggester`, page de résultat, workflow n8n côté `../../n8n` (à versionner là-bas) | Bouton suggère une recette en français, stockée |
 | **L6 — Polish** | Mobile QA, accessibilité de base, traductions FR, `all-ai` clean | `mtdocker all-ai` vert |
-
-## 9. Points ouverts / décisions à valider plus tard
-
-
-## 10. À ne PAS faire en v1
-
-- Historique multi-jours / graphiques (lot futur)
-- PWA installable
-- Register public
-- Génération de listes de courses
-- Mobile native app
