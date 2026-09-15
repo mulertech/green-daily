@@ -7,8 +7,8 @@ App Symfony de tracking nutritionnel orientée végétarien. Usage personnel/fam
 - **PHP 8.4 / Symfony 7.x** (aligné `mulertech/`)
 - **PostgreSQL 16+** (cohérence infra)
 - **Twig + Tailwind + JS vanilla** via **AssetMapper** (pas de Stimulus, pas de Turbo, pas de framework JS)
-- **Docker dev** : `mulertech/docker-dev` → `./vendor/bin/mtdocker` (auto-détection des modules : frankenphp + symfony + postgres + mailpit + adminer)
-- **Docker prod** : déploiement via `../prod-templates` (à brancher au moment du déploiement, hors scope L1)
+- **Docker dev** : `mulertech/docker-dev` → `../vendor/bin/mtdocker` (auto-détection des modules : frankenphp + symfony + postgres + mailpit + adminer)
+- **Docker prod** : déploiement via `../../prod-templates` (à brancher au moment du déploiement, hors scope L1)
 - **Réseaux Docker (prod)** : rejoindre uniquement `traefik_proxy` — `docker-n8n` y est déjà attaché, joignable directement par nom de container (même pattern que `docker-mulertech-www` ↔ `docker-n8n`).
 - **Auth** : Symfony Security, email + mot de passe, form login. Pas de register public en v1 → commande CLI `app:user:create` (limite l'accès à toi/famille). Reset password Symfony bundle.
 
@@ -60,7 +60,7 @@ Index : `consumption_entry(user_id, consumed_at)` ; GIN sur `food.search_vector`
 
 ## 3. Import CIQUAL 2020
 
-- Télécharger le XLSX depuis data.gouv.fr (URL versionnée stockée dans un README du dossier `import/`)
+- Télécharger le XLSX depuis data.gouv.fr (URL versionnée stockée dans un README du dossier `../import`)
 - Commande `app:ciqual:import` (Symfony Console)
   - Parse XLSX (`phpoffice/phpspreadsheet`)
   - Normalise les colonnes vers nos 11 nutriments (mapping explicite documenté)
@@ -91,7 +91,7 @@ Pages (navigation classique, form submits + redirect/PRG, pas de SPA) :
 
 **Autocomplete (option `<datalist>` natif + fetch vanilla)** :
 - `<input name="food_query" list="foods-datalist" autocomplete="off">` + `<datalist id="foods-datalist">`
-- Module JS vanilla `assets/foods-search.js` (importé via AssetMapper) :
+- Module JS vanilla `../assets/foods-search.js` (importé via AssetMapper) :
   - écoute `input` sur le champ, debounce 200ms
   - `fetch('/api/foods/search?q=' + encodeURIComponent(q))` → JSON `[{id, label}]`
   - vide et remplit `<datalist>` avec `<option value="label" data-id="id">`
@@ -132,7 +132,7 @@ Pas de PWA en v1 (sortie de scope).
 | **L2 — Auth + profil** | Entité User, Security, login/logout, commande `app:user:create`, page profil | Login fonctionnel, profil éditable |
 | **L3 — Schéma + CIQUAL** | Entités Food/Nutrient/FoodNutrient/Rda, fixtures Nutrient + Rda ANSES, commande import CIQUAL, endpoint autocomplete | Recherche "lentille" → résultats pertinents |
 | **L4 — Saisie + dashboard** | ConsumptionEntry, calculateur AJR, dashboard mobile, ajout/suppression Turbo | Ajouter "200g lentilles cuites" reflète % fer/protéines |
-| **L5 — Recette IA** | Service `RecipeSuggester`, page de résultat, workflow n8n côté `../n8n` (à versionner là-bas) | Bouton suggère une recette en français, stockée |
+| **L5 — Recette IA** | Service `RecipeSuggester`, page de résultat, workflow n8n côté `../../n8n` (à versionner là-bas) | Bouton suggère une recette en français, stockée |
 | **L6 — Polish** | Mobile QA, accessibilité de base, traductions FR, `all-ai` clean | `mtdocker all-ai` vert |
 
 ## 9. Points ouverts / décisions à valider plus tard
