@@ -137,10 +137,6 @@ Pas de PWA en v1 (sortie de scope).
 
 ## 9. Points ouverts / décisions à valider plus tard
 
-- **AJR grossesse/allaitement** : hors v1, mais laisser le schéma `Rda` extensible (ajouter colonnes `pregnant`/`lactating` plus tard).
-- **Compatibilité unités CIQUAL** : valider mapping pour vitamine A (RE vs µg), oméga-3 (somme DHA+EPA dans CIQUAL ?), iode (souvent absent → fallback table de sels iodés).
-- **Conversion β-carotène → vitamine A** : appliquer ratio 1:12 (RE) ou afficher séparément ? → afficher séparément en v1.
-- **Backups** : à intégrer dans `vps/` une fois en prod (pg_dump quotidien chiffré).
 
 ## 10. À ne PAS faire en v1
 
