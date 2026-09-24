@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd6a2b0fe4a1f8d4e5bb69298c907dba",
+    "content-hash": "e921542636b6694e734c2e62bc54af40",
     "packages": [
         {
             "name": "brick/math",
@@ -1957,16 +1957,16 @@
         },
         {
             "name": "mulertech/csp-bundle",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mulertech/csp-bundle.git",
-                "reference": "75dd99fad464eb78bc3681eb6d43c774e6c4603d"
+                "reference": "b6986dcd222553b39e4549c599a6e7c61c84ecdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mulertech/csp-bundle/zipball/75dd99fad464eb78bc3681eb6d43c774e6c4603d",
-                "reference": "75dd99fad464eb78bc3681eb6d43c774e6c4603d",
+                "url": "https://api.github.com/repos/mulertech/csp-bundle/zipball/b6986dcd222553b39e4549c599a6e7c61c84ecdd",
+                "reference": "b6986dcd222553b39e4549c599a6e7c61c84ecdd",
                 "shasum": ""
             },
             "require": {
@@ -2017,9 +2017,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mulertech/csp-bundle/issues",
-                "source": "https://github.com/mulertech/csp-bundle/tree/v3.1.0"
+                "source": "https://github.com/mulertech/csp-bundle/tree/v3.2.0"
             },
-            "time": "2026-09-07T09:06:00+00:00"
+            "time": "2026-09-17T15:59:18+00:00"
         },
         {
             "name": "mulertech/passkey-bundle",
@@ -9984,16 +9984,16 @@
         },
         {
             "name": "mulertech/docker-dev",
-            "version": "v3.14.1",
+            "version": "v3.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mulertech/docker-dev.git",
-                "reference": "64699407f92e854f88075326496cc8ce170db5bb"
+                "reference": "13b5685330fb07117a9c66bff6f64ef8a6023a5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mulertech/docker-dev/zipball/64699407f92e854f88075326496cc8ce170db5bb",
-                "reference": "64699407f92e854f88075326496cc8ce170db5bb",
+                "url": "https://api.github.com/repos/mulertech/docker-dev/zipball/13b5685330fb07117a9c66bff6f64ef8a6023a5e",
+                "reference": "13b5685330fb07117a9c66bff6f64ef8a6023a5e",
                 "shasum": ""
             },
             "require": {
@@ -10034,9 +10034,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mulertech/docker-dev/issues",
-                "source": "https://github.com/mulertech/docker-dev/tree/v3.14.1"
+                "source": "https://github.com/mulertech/docker-dev/tree/v3.14.2"
             },
-            "time": "2026-09-13T13:21:19+00:00"
+            "time": "2026-09-17T16:56:50+00:00"
         },
         {
             "name": "myclabs/deep-copy",
