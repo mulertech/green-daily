@@ -11,12 +11,12 @@ final class Version20260924120000 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Failing migration used to test docker-prod deployment rollback';
+        return 'Slow migration used to test docker-prod deployment';
     }
 
     public function up(Schema $schema): void
     {
-        $this->addSql('SELECT 1 FROM essai_table_absente');
+        $this->addSql('SELECT pg_sleep(30)');
     }
 
     public function down(Schema $schema): void
