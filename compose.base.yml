@@ -1,0 +1,16 @@
+# =============================================================================
+# compose.base.yml - Surcharges spécifiques au projet
+# =============================================================================
+
+secrets:
+  n8n_webhook_token:
+    file: "${N8N_WEBHOOK_TOKEN_FILE_LOCAL:?error}"
+
+services:
+  www:
+    environment:
+      # Lu par Symfony via %env(trim:file:N8N_WEBHOOK_TOKEN_FILE)% : seul le chemin
+      # du fichier monté circule, jamais le jeton.
+      N8N_WEBHOOK_TOKEN_FILE: "/run/secrets/n8n_webhook_token"
+    secrets:
+      - n8n_webhook_token

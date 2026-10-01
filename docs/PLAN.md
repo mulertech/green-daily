@@ -114,7 +114,7 @@ Pas de PWA en v1 (sortie de scope).
   - Timeout HTTP 60s ; en cas d'échec → message d'erreur friendly, pas de retry auto
   - Persiste la `RecipeSuggestion` (succès ou échec)
 - Côté n8n : à créer (workflow `Green_daily_recipe`) — webhook trigger → AI agent (OpenAI via credential `MulerTechAi`) → respond webhook avec markdown
-- Secret partagé : header `X-Webhook-Token` configuré côté green-daily (env) et côté n8n (vérif au début du workflow)
+- Secret partagé : header `X-Webhook-Token` configuré côté green-daily (fichier secret `n8n_webhook_token`, dont le chemin est donné par `N8N_WEBHOOK_TOKEN_FILE`) et côté n8n (vérif au début du workflow)
 
 ## 7. Sécurité & conformité
 

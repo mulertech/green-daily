@@ -24,7 +24,7 @@ services:
     App\Service\RecipeSuggester:
         arguments:
             $webhookUrl: '%env(N8N_RECIPE_WEBHOOK_URL)%'
-            $webhookToken: '%env(N8N_WEBHOOK_TOKEN)%'
+            $webhookToken: '%env(trim:file:N8N_WEBHOOK_TOKEN_FILE)%'
 
     twig.markdown.default:
         alias: App\Twig\GithubFlavoredMarkdown
