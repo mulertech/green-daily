@@ -1,0 +1,26 @@
+repository: git@github.com:mulertech/green-daily.git
+domains:
+  - green-daily.mulertech.net
+stack: frankenphp
+
+limits:
+  www: {memory: 640M, cpus: 1}
+
+headers:
+  indexable: true
+  redirect_www: false
+  csp: application
+
+database:
+  engine: postgres
+  name: green_daily
+  user: green_daily_user
+
+secrets:
+  n8n_webhook_token:
+    services: [www]
+
+variables:
+  # docker-n8n is reached on traefik_proxy, which www joins.
+  N8N_RECIPE_WEBHOOK_URL: http://docker-n8n:5678/webhook/green-daily/recipe
+  WEBAUTHN_RP_ID: green-daily.mulertech.net
